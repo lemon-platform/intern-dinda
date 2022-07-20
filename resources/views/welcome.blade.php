@@ -19,7 +19,7 @@
         <div class="grid grid-cols-2 gap-3 mt-3">
             <a class="flex items-end h-32 p-2 bg-green-100 border rounded" href="">Peminjam</a>
             <a class="flex items-end h-32 p-2 bg-blue-100 border rounded" href="">Pemilik</a>
-            <a class="flex items-end h-32 p-2 bg-gray-100 border rounded" href="">Admin</a>
+            <a class="flex items-end h-32 p-2 bg-gray-100 border rounded" href="/admin">Admin</a>
         </div>
     </div>
 </body>

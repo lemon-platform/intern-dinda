@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +20,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', [AdminController::class, 'viewDashboard']);
+Route::middleware('auth')->group(function() {
+    Route::get('/admin', [AdminController::class, 'viewDashboard']);
+    Route::get('/member', [MemberController::class, 'viewDashboard']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::middleware('guest')->group(function() {
+    Route::get('/login', [AuthController::class, 'viewLogin']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'viewRegister']);
+    Route::post('/register', [AuthController::class, 'register']);
+});

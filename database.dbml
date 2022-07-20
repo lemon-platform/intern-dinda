@@ -1,0 +1,112 @@
+Table migrations [headercolor: #F05340] {
+  id "bigint unsigned" [not null, pk, increment]
+  migration varchar [not null]
+  batch integer [not null]
+}
+
+Table users [headercolor: #F05340] {
+  id "bigint unsigned" [not null, pk, increment]
+  name varchar [not null]
+  role varchar [default: "member"]
+  email varchar [unique]
+  email_verified_at datetime [null]
+  password varchar [not null]
+  remember_token varchar [not null]
+  created_at datetime
+  updated_at datetime
+
+  indexes {
+    (id) [
+      name: "PRIMARY",
+      type: btree
+    ]
+    (email) [
+      name: "users_email_unique",
+      type: btree,
+      unique
+    ]
+  }
+}
+
+Table password_resets [headercolor: #F05340] {
+  email varchar [not null]
+  token varchar [not null]
+  created_at datetime
+
+  indexes {
+    (email) [
+      name: "password_resets_email_index",
+      type: btree
+    ]
+  }
+}
+
+Table failed_jobs [headercolor: #F05340] {
+  id "bigint unsigned" [not null, pk, increment]
+  uuid varchar [not null, unique]
+  connection text [not null]
+  queue text [not null]
+  payload longtext [not null]
+  exception longtext [not null]
+  failed_at datetime [default: `now()`]
+
+  indexes {
+    (id) [
+      name: "PRIMARY",
+      type: btree
+    ]
+    (uuid) [
+      name: "failed_jobs_uuid_unique",
+      type: btree
+    ]
+  }
+}
+
+Table personal_access_tokens [headercolor: #F05340] {
+  id "bigint unsigned" [not null, pk, increment]
+  tokenable_id "bigint unsigned"
+  tokenable_type varchar [not null]
+  name varchar [not null]
+  token varchar(64) [not null]
+  abilities text [null]
+  last_used_at datetime [null]
+  created_at datetime
+  updated_at datetime
+
+  indexes {
+    (id) [
+      name: "PRIMARY",
+      type: btree
+    ]
+    (tokenable_id, tokenable_type) [
+      name: "personal_access_tokens_tokenable_id_tokenable_type_index",
+      type: btree
+    ]
+  }
+}
+
+Table books [headercolor: #1E69FD] {
+  id "bigint unsigned" [not null, pk, increment]
+  title varchar [not null]
+  genre varchar [null]
+  stock integer [not null, default: 0]
+  created_at datetime
+  deleted_at datetime
+}
+
+Table borrows [headercolor: #1E69FD] {
+  id "bigint unsigned" [not null, pk, increment]
+  user_id "bigint unsigned" [not null]
+  book_id "bigint unsigned" [not null]
+  amount "integer unsigned" [not null]
+  created_at datetime
+  deleted_at datetime
+}
+
+// ---
+
+Ref: users.email < password_resets.email
+Ref: users.id < personal_access_tokens.tokenable_id
+
+Ref: users.id < borrows.user_id
+Ref: books.id < borrows.book_id
