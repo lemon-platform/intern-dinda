@@ -13,16 +13,12 @@
         <div class="w-full bg-red-700 text-white mb-12 text-center py-3">{{ session('error_banner') }}</div>
     @endif
 
-    @if (session('status'))
-        <div class="w-full bg-green-700 text-white mb-12 text-center py-3">{{ session('status') }}</div>
-    @endif
-
     <div class="p-6 bg-gray-100 border">
-        <h1 class="text-4xl">Login</h1>
+        <h1 class="text-4xl">Forget Password</h1>
     </div>
 
     <div class="mt-12">
-        <form action="/login" method="POST" class="grid gap-3">
+        <form action="/forget-password" method="POST" class="grid gap-3">
             @csrf
             <div>
                 <label class="text-sm font-medium block" for="email">Email</label>
@@ -31,19 +27,17 @@
                     <div class="mt-1 text-red-700">{{ $message }}</div>
                 @enderror
             </div>
-            <div>
-                <label class="text-sm font-medium block" for="password">Password</label>
-                <input class="h-10 px-3 border w-full mt-1" id="password" type="password" name="password" autocomplete="current-password">
-                @error('password')
-                    <div class="mt-1 text-red-700">{{ $message }}</div>
-                @enderror
-            </div>
-            <button type="submit" class="bg-slate-200 h-12 rounded font-medium">Login</button>
+            <button type="submit" class="bg-slate-200 h-12 rounded font-medium">Send Reset Link Password</button>
         </form>
 
+        @if (session()->has('status'))
+            <div class="bg-green-50 text-green-900 flex items-center justify-center mt-8 h-12 w-full">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <div class="mt-12 flex flex-col gap-2 items-start">
-            <a href="/register" class="font-medium text-blue-600 underline">Bikin akun</a>
-            <a href="/forget-password" class="font-medium text-blue-600 underline">Lupa Password</a>
+            <a href="/login" class="font-medium text-blue-600 underline">Balik ke login</a>
         </div>
     </div>
 </body>

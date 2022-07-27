@@ -28,8 +28,12 @@ Route::middleware('auth')->group(function() {
 });
 
 Route::middleware('guest')->group(function() {
-    Route::get('/login', [AuthController::class, 'viewLogin']);
+    Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'viewRegister']);
     Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/forget-password', [AuthController::class, 'viewForgetPassword']);
+    Route::post('/forget-password', [AuthController::class, 'forgetPassword']);
+    Route::get('/reset-password/{token}', [AuthController::class, 'viewResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 });
