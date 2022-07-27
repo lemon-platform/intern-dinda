@@ -18,7 +18,7 @@ class BookFactory extends Factory
     {
         return [
             'title' => str(fake()->words(4, true))->title(),
-            'genre' => fake()->randomElement(['Fantasy', 'Science Fiction', 'Mystery', 'Romance', 'Thriller', 'Horror']),
+            'genre' => fake()->randomElement(config('custom.genre')),
             'stock' => fake()->randomDigit(),
         ];
     }

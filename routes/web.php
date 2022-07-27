@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\BukuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,8 +24,17 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function() {
     Route::get('/admin', [AdminController::class, 'viewDashboard']);
     Route::get('/member', [MemberController::class, 'viewDashboard']);
-
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::prefix('/admin')->group(function() {
+        Route::get('/buku', [BukuController::class, 'readAll']);
+        Route::get('/buku/create', [BukuController::class, 'viewCreate']);
+        Route::post('/buku/create', [BukuController::class, 'create']);
+        Route::get('/buku/{id}', [BukuController::class, 'read']);
+        Route::get('/buku/{id}/edit', [BukuController::class, 'viewUpdate']);
+        Route::post('/buku/{id}/edit', [BukuController::class, 'update']);
+        Route::post('/buku/{id}/delete', [BukuController::class, 'delete']);
+    });
 });
 
 Route::middleware('guest')->group(function() {
